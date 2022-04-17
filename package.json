@@ -1,0 +1,16 @@
+{
+  "name": "slack-session-welcome",
+  "version": "1.0.0",
+  "description": "A starting point for building a Slack app that welcomes a new team member to a channel",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "author": "Jim Ray <jimray@slack-corp.com>",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2"
+  }
+}
