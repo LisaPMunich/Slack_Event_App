@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 _DS_Store
-_env
+.env
 _env.sample
 img
+node_modules
