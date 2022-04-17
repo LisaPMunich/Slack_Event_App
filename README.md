@@ -15,3 +15,8 @@ Create app on web server Heroku
 ```bash
 heroku git:remote -a slack-event-app
 ````
+
+* Add heroku page (https://slack-event-app.herokuapp.com/slack/events) to event subscriptions with toggle on,
+Add event 'member joined channel"'
+
+install web to workspace
