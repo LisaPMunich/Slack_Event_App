@@ -73,7 +73,7 @@ app.post('/slack/events', (req, res) => {
                   {
                     text: '',
                     fallback:
-                      'Welcome to the company party channel! Since your client doesn\'t support dialogs, check in with the party planning committe.',
+                      'Welcome to the company party channel! Since your client doesn\'t support dialogs, check in with the party planning committee.',
                     callback_id: 'party_starter',
                     color: '#3AA3E3',
                     attachment_type: 'default',
