@@ -5,6 +5,8 @@
 ## Description and Objective
 
 I developed this Slack Event App as part of my Full-Stack Web Development Course at CareerFoundry. This project was primarily an exercise in customizing an existing app boilerplate and connecting it to the app.
+The purpose of the slack app is to facilitate organizing a company's internal events or parties. Once customized the slack app will listen for an event — in this case, new team members joining a specific channel (WELCOME_CHANNEL) created for the company party. Then it will respond to that event with an interactive message that presents them with a form to fill out. The contents of that
+form will then be posted to a separate channel administered by the internal events team (POST_TO_CHANNEL).
 
 ### What technology used and why?
 
@@ -15,11 +17,10 @@ principles would apply to any other app built for public distribution in the Sla
 
 ### What challenges did I face, what did I learn?
 
-Since the elements of the app were predetermined, the challenge was to navigate within the set parameters.
+Since the elements of the app were predetermined, the challenge was to navigate within the set parameters defined by slack.
 For example when customizing the dialog form asking the user to fill in certain information, only certain form elements were supported by slack (text, textarea, select). So in order to customize the app within the given parameters, it was necessary to consult the "Developer guides and docs" section and only use the elements described there.
 
 Also, the boilerplate did not include any logging. But I was only able to figure out the correct channel IDs for the "WELCOME_CHANNEL" and the internal event planning team's channel "POST_TO_CHANNEL" by adding logging.
-
 
 
 ## Steps
