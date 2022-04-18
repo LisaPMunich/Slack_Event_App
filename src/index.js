@@ -12,7 +12,9 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const qs = require('querystring');
 
-const dialogTemplate = require('./dialog');
+const dialog = require('./dialog');
+const dialogTemplate = dialog.dialogForm;
+const dialogFields = dialog.fields;
 
 // grab the environment variables
 const SLACK_VERIFICATION_TOKEN = process.env.SLACK_VERIFICATION_TOKEN;
@@ -59,9 +61,11 @@ app.post('/slack/events', (req, res) => {
 
           if(event.type === 'member_joined_channel'){
             res.status(200).end();
+            console.warn('member_joined_channel', {channel: event.channel, compare: SLACK_WELCOME_CHANNEL});
 
             // you will receive a `member_joined_channel` event for every channel, so make sure it's the right one
             if(event.channel === SLACK_WELCOME_CHANNEL){
+              console.log('Employee joined Event channel.')
               // The chat.postEphemeral method posts a message that only a specific user can see
               // https://api.slack.com/methods/chat.postEphemeral
               axios.post('/api/chat.postEphemeral', {
@@ -95,14 +99,22 @@ app.post('/slack/events', (req, res) => {
                 ]
               })
               .then(function(res){
-                // console.log(res);
+                if(res.data.ok){
+                  console.log('Response Okay')
+                } else {
+                  console.log('response data: ', res.data);
+                  console.log('Not Okay')
+                }
               })
               .catch(function (error) {
-                console.log(error);
+                console.error(error);
               });
             }
           }
-        } else { res.sendStatus(500); }
+        } else {
+          console.error('Wrong verification token')
+          res.sendStatus(500);
+        }
         break;
       }
     default: { res.sendStatus(500); }
@@ -133,22 +145,35 @@ app.post('/slack/components', (req, res) => {
     
         // the user has clicked the button to show the form
         if(action['value'] === 'show_form'){
+          console.log('Show Form')
           // respond by sending the actual dialog
           const welcomeDialog = dialogTemplate(payload.trigger_id);
           axios.post('https://slack.com/api/dialog.open', welcomeDialog)
             .then(function(res){
-              //console.log(res);
+              if(res.data.ok){
+                console.log('Response Okay')
+              } else {
+                console.log('response data: ', res.data);
+                console.log('Not Okay')
+              }
           })
           .catch(function (error) {
               console.log(error);
             });  
         }
+        break;
         // TODO: handle the case of what happens if the user clicks the `later` button. Maybe remind them in a day?
       }
       case 'dialog_submission': {
         // The user has submitted the dialog
         // More details on what Dialog submissions look like here: https://api.slack.com/dialogs#response
         const submission = payload.submission;
+        console.log('submission', submission);
+
+        if(typeof submission[dialogFields.NAME] === 'undefined'){
+          console.warn('no submission data')
+          return;
+        }
         
         // `chat.postMessage` posts a message that everyone in the channel can see
         // https://api.slack.com/methods/chat.postMessage
@@ -160,12 +185,22 @@ app.post('/slack/components', (req, res) => {
               fallback: "Someone is coming to the party!",
               color: "#99badd",
               pretext: ":tada: Someone is coming to the party!",
-              title: `${submission['full-name']}`,
-              text: `${submission['message-url']}`,
+              title: `${submission[dialogFields.NAME]}`,
+              text: `${submission[dialogFields.NAME]} is coming to the party.`,
               fields: [
                 {
-                  title: "T-shirt size",
-                  value: `${submission['shirt-size']}`,
+                  title: "Guest Count",
+                  value: `${submission[dialogFields.COUNT]}`,
+                  short: false
+                },
+                {
+                  title: "Dietary Requirements",
+                  value: `${submission[dialogFields.DIET]}`,
+                  short: false
+                },
+                {
+                  title: "Weekday",
+                  value: `${submission[dialogFields.DAY]}`,
                   short: false
                 }
               ]
