@@ -4,7 +4,7 @@
 
 ## Description and Objective
 
-I developed this Slack Event App as part of my Full-Stack Web Development Course at CareerFoundry. This project was primarily an exercise in customizing an existing app boilerplate and connecting it to the app.
+I developed this Slack Event App as extra-curricular project during my Full-Stack Web Development Course at CareerFoundry. This project was primarily an exercise in customizing an existing app boilerplate and connecting it to the app.
 The purpose of the slack app is to facilitate organizing a company's internal events or parties. Once customized the slack app will listen for an event — in this case, new team members joining a specific channel (WELCOME_CHANNEL) created for the company party. Then it will respond to that event with an interactive message that presents them with a form to fill out. The contents of that
 form will then be posted to a separate channel administered by the internal events team (POST_TO_CHANNEL).
 
